@@ -1,7 +1,7 @@
 package com.joao.novice_spring_dev;
 
 import java.util.List;
-
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -46,10 +46,21 @@ public class CarroController {
         if (repository.findById(id).orElse(null) != null) {
             repository.deleteById(id);
             sBody.status = "Deletado com sucesso";
-            return ResponseEntity.ok(sBody.status);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "text/plain");
+            headers.add("X-Custom-Header", "exemplo");
+            ResponseEntity  myResponse =  new ResponseEntity<>(sBody.status, headers, HttpStatus.ACCEPTED);
+            return myResponse;
+
         }else{
             sBody.status = "Não foi possível deletar: Carro não encontrado.";
-            return ResponseEntity.ok(sBody.status);
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Content-Type", "text/plain");
+            headers.add("X-Custom-Header", "exemplo");
+            ResponseEntity  myResponse =  new ResponseEntity<>(sBody.status, headers, HttpStatus.OK);
+
+            return myResponse;
         }
+        // HttpStatus negativos podem não retornar o corpo e causar exeção.
     }
 }
