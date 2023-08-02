@@ -61,6 +61,6 @@ public class CarroController {
 
             return myResponse;
         }
-        // HttpStatus negativos podem não retornar o corpo e causar exeção.
+        // HttpStatus negativos podem não retornar o corpo e causar exceção.
     }
 }
