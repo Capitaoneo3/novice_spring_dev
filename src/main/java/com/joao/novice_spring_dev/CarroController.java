@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -39,7 +40,16 @@ public class CarroController {
     }
 
     @DeleteMapping("/carro/{id}")
-    public void deleteCarro(@PathVariable Long id){
-        repository.deleteById(id);
+    public ResponseEntity<String> deleteCarro(@PathVariable Long id){
+        StatusBody sBody = new StatusBody();
+
+        if (repository.findById(id).orElse(null) != null) {
+            repository.deleteById(id);
+            sBody.status = "Deletado com sucesso";
+            return ResponseEntity.ok(sBody.status);
+        }else{
+            sBody.status = "Não foi possível deletar: Carro não encontrado.";
+            return ResponseEntity.ok(sBody.status);
+        }
     }
 }
