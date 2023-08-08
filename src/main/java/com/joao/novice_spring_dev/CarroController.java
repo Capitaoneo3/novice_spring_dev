@@ -63,4 +63,13 @@ public class CarroController {
         }
         // HttpStatus negativos podem não retornar o corpo e causar exceção.
     }
+    @DeleteMapping("/deletarTodosOsCarros")
+    public ResponseEntity<String> deleteTodosCarros(){
+
+        repository.deleteAll();
+        return ResponseEntity.status(HttpStatus.OK).body("Todos os carros foram deletados com sucesso.");
+
+    
+        // HttpStatus negativos podem não retornar o corpo e causar exceção.
+    }
 }
